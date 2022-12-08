@@ -1,7 +1,10 @@
+import { GameObject } from "./engine";
 import { Point, Rect } from "./geom";
 
 export function initCanvas(canvas: HTMLCanvasElement) {
     const ctx = canvas.getContext('2d');
+
+    ctx.font = '20px Arial';
 
     const WIDTH = canvas.width;
     const HEIGHT = canvas.height;
@@ -104,7 +107,36 @@ export function initCanvas(canvas: HTMLCanvasElement) {
         ctx.closePath();
     }
 
+    function drawPlayer(player: GameObject) {
+        ctx.save();
+        ctx.translate(player.position.x, player.position.y);
+        ctx.rotate(player.dir);
+        ctx.scale(0.5, 0.5);
+
+        ctx.beginPath();
+
+        ctx.moveTo(125, 0);
+        ctx.lineTo(-75, 50);
+        ctx.lineTo(-25, 0)
+        ctx.lineTo(-75, -50);
+
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.restore();
+    }
+
+    function draw(ref: GameObject) {
+        if (ref.type == 'player') {
+            drawPlayer(ref);
+        } else if (ref.type == 'asteroid') {
+            circle(ref.position, 15, 'red');
+        }
+    }
+
     return {
+        raw: ctx,
         WIDTH,
         HEIGHT,
         clear,
@@ -112,7 +144,8 @@ export function initCanvas(canvas: HTMLCanvasElement) {
         circle,
         rect,
         line,
-        raw: ctx
+        drawPlayer,
+        draw
     }
 }
 

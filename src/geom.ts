@@ -49,6 +49,10 @@ export class Vector implements Point {
         return Math.sqrt(dx ** 2 + dy ** 2);
     }
 
+    sqLength() {
+        return this.x ** 2 + this.y ** 2;
+    }
+
     static add(p1: Point, p2: Point) {
         return new Vector(p1.x + p2.x, p1.y + p2.y);
     }
