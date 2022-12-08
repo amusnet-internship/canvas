@@ -111,7 +111,8 @@ export function initCanvas(canvas: HTMLCanvasElement) {
         drawGrid,
         circle,
         rect,
-        line
+        line,
+        raw: ctx
     }
 }
 
